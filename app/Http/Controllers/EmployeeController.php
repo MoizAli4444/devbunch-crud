@@ -52,9 +52,10 @@ class EmployeeController extends Controller
     }
 
     public function loginp(Request $request){
+
+
         $employees = Employee::where('email', $request['email'])
-        ->select(['employee_id', 'name', 'email', 'gender','password', 'address', 'status'])
-        ->orderBy('name')
+        ->select(['employee_id', 'password'])
         ->get();
         $pass = $employees->map->only(['password','employee_id']);
         $valpass = $pass[0]['password'];
@@ -72,7 +73,7 @@ class EmployeeController extends Controller
 
 
         } catch (DecryptException $e) {
-            echo $e;
+            return redirect('/');
         }
            
     }
